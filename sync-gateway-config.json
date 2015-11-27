@@ -3,8 +3,11 @@
   "databases": {
     "db": {
       "server": "walrus:",
+      "users": {
+        "admin": {"password": "pass", "admin_roles":["admin"]}
+      },
       "roles": {
-        "moderator": {}
+        "moderator": {"admin_channels":["moderators"]}
       },
       "sync": `
 function (doc, oldDoc) {
