@@ -104,7 +104,7 @@ var sync = function (doc, oldDoc) {
     // Grant the user access to the task-list and its tasks.
     access(doc.username, "task-list:" + doc.taskList.id);
   } else {
-    // Log this error.
+    // Log this unexpected error.
     log("Invalid document type: " + doc.type);
     
     throw({forbidden: "Invalid document type: " + doc.type});
