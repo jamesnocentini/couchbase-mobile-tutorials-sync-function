@@ -3,6 +3,9 @@
   "databases": {
     "db": {
       "server": "walrus:",
+      "roles": {
+        "moderator": {}
+      },
       "sync": `
 function (doc, oldDoc) {
   // We don’t allow changing the type of any document.
