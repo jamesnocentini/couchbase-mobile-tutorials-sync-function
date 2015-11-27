@@ -46,18 +46,11 @@ var sync = function (doc, oldDoc) {
 
     // Add doc to task-list's channel.
     channel("task-list:" + doc._id);
+    channel("moderators");
 
     // Grant task-list owner access to the task-list, its tasks, and its users.
     access(doc.owner, "task-list:" + doc._id);
     access(doc.owner, "task-list:" + doc._id + ":users");
-
-    // Grant moderators access to the task-list, its tasks, and its users.
-    //
-    // TODO: Maybe we should define an access grant for the moderator role
-    // in the config and just channel docs instead of making an access grant
-    // (because access grants are expensive). e.g. channel("moderator");
-    access("role:moderator", "task-list:" + doc._id);
-    access("role:moderator", "task-list:" + doc._id + ":users");
   } else if (doc.type == "task") {
     requireUserOrAccess(doc.taskList.owner, "task-list:" + doc.taskList.id);
 
@@ -76,8 +69,9 @@ var sync = function (doc, oldDoc) {
       validateReadOnly("taskList.owner", doc.taskList.owner, oldDoc.taskList.owner);
     }
 
-    // Add doc to task-list's channel.
+    // Add doc to task-list and moderators channel.
     channel("task-list:" + doc.taskList.id);
+    channel("moderators");
   } else if (doc.type == "task-list:user") {
     requireUserOrRole(doc.taskList.owner, "moderator");
 
@@ -103,8 +97,9 @@ var sync = function (doc, oldDoc) {
       validateReadOnly("taskList.owner", doc.taskList.owner, oldDoc.taskList.owner);
     }
 
-    // Add doc to task-list’s users channel.
+    // Add doc to task-list users and moderators channel.
     channel("task-list:" + doc.taskList.id + ":users");
+    channel("moderators");
 
     // Grant the user access to the task-list and its tasks.
     access(doc.username, "task-list:" + doc.taskList.id);
