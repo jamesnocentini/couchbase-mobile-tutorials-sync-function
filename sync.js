@@ -31,17 +31,21 @@ function (doc, oldDoc) {
       role(doc.username, "moderator");
     }
   } else if (getType() == "task-list") {
-    if (isDelete()) {
+    if (isCreate()) {
+      // Only allow users to create task-lists for themselves.
+      requireUser(doc.owner);
+    } else {
       requireUserOrRole(doc.owner, "moderator");
+    }
+    
+    if (isDelete()) {
+      // No need to validate anything else.
     } else {
       // Validate required fields.
       validateNotEmpty("name", doc.name);
       validateNotEmpty("owner", doc.owner);
       
       if (isCreate()) {
-        // Only allow users to create task-lists for themselves.
-        requireUser(doc.owner);
-
         // Validate that the _id is prefixed by owner.
         validatePrefix("_id", doc._id, "owner", doc.owner + ":");
       } else {
@@ -63,6 +67,8 @@ function (doc, oldDoc) {
     requireUserOrAccess(doc.taskList.owner, "task-list:" + doc.taskList.id);
 
     if (isDelete()) {
+      // No need to validate anything else.
+    } else {
       // Validate required fields.
       validateNotEmpty("taskList.id", doc.taskList.id);
       validateNotEmpty("taskList.owner", doc.taskList.owner);
@@ -86,6 +92,8 @@ function (doc, oldDoc) {
     requireUserOrRole(doc.taskList.owner, "moderator");
 
     if (isDelete()) {
+      // No need to validate anything else.
+    } else {
       // Validate required fields.
       validateNotEmpty("taskList.id", doc.taskList.id);
       validateNotEmpty("taskList.owner", doc.taskList.owner);
