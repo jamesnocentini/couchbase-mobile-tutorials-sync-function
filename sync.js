@@ -49,8 +49,6 @@ function (doc, oldDoc) {
         // Validate that the _id is prefixed by owner.
         validatePrefix("_id", doc._id, "owner", doc.owner + ":");
       } else {
-        requireUserOrRole(doc.owner, "moderator");
-
         // Don’t allow task-list ownership to be changed.
         validateReadOnly("owner", doc.owner, oldDoc.owner);
       }
