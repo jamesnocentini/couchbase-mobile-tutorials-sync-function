@@ -45,9 +45,7 @@ function (doc, oldDoc) {
         requireUserOrRole(doc.owner, "moderator");
       }
       
-      if (isDelete()) {
-        // No need to validate anything else.
-      } else {
+      if (!isDelete()) {
         // Validate required fields.
         validateNotEmpty("name", doc.name);
         validateNotEmpty("owner", doc.owner);
