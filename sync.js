@@ -1,6 +1,6 @@
 function (doc, oldDoc) {
-  // We don’t allow changing the type of any document.
   if (isUpdate()) {
+    // Don’t allow changing the type of any document.
     validateReadOnly("type", doc.type, oldDoc.type);
   }
 
