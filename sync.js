@@ -7,7 +7,7 @@ function (doc, oldDoc) {
   }
   
   if (getType() == "moderator") {
-    /* Require Access */ {
+    /* Control Access */ {
       // Only allow admins to add/remove moderators.
       requireRole("admin");
     }
@@ -39,7 +39,7 @@ function (doc, oldDoc) {
       }
     }
   } else if (getType() == "task-list") {
-    /* Require Access */ {
+    /* Control Access */ {
       if (isCreate()) {
         // Only allow users to create task-lists for themselves.
         requireUser(doc.owner);
@@ -76,7 +76,7 @@ function (doc, oldDoc) {
       access(doc.owner, "task-list:" + doc._id + ":users");
     }
   } else if (getType() == "task") {
-    /* Require Access */ {
+    /* Control Access */ {
       requireUserOrAccess(doc.taskList.owner, "task-list:" + doc.taskList.id);
     }
     
@@ -105,7 +105,7 @@ function (doc, oldDoc) {
       channel("moderators");
     }
   } else if (getType() == "task-list:user") {
-    /* Require Access */ {
+    /* Control Access */ {
       requireUserOrRole(doc.taskList.owner, "moderator");
     }
     
