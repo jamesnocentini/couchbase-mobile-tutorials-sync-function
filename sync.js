@@ -79,7 +79,7 @@ function (doc, oldDoc) {
         // Validate required fields.
         validateNotEmpty("taskList.id", doc.taskList.id);
         validateNotEmpty("taskList.owner", doc.taskList.owner);
-        validateNotEmpty("username", doc.username);
+        validateNotEmpty("task", doc.task);
         
         if (isCreate()) {
           // Validate that the taskList.id is prefixed by taskList.owner.  We only need to
@@ -106,7 +106,7 @@ function (doc, oldDoc) {
         // Validate required fields.
         validateNotEmpty("taskList.id", doc.taskList.id);
         validateNotEmpty("taskList.owner", doc.taskList.owner);
-        validateNotEmpty("task", doc.task);
+        validateNotEmpty("username", doc.username);
         
         if (isCreate()) {
           // We use a key pattern to ensure unique users w/in a list, so we need to
