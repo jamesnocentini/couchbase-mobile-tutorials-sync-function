@@ -52,15 +52,15 @@ function (doc, oldDoc) {
         // Don’t allow task-list ownership to be changed.
         validateReadOnly("owner", doc.owner, oldDoc.owner);
       }
-
-      // Add doc to task-list's channel.
-      channel("task-list:" + doc._id);
-      channel("moderators");
-
-      // Grant task-list owner access to the task-list, its tasks, and its users.
-      access(doc.owner, "task-list:" + doc._id);
-      access(doc.owner, "task-list:" + doc._id + ":users");
     }
+
+    // Add doc to task-list's channel.
+    channel("task-list:" + doc._id);
+    channel("moderators");
+
+    // Grant task-list owner access to the task-list, its tasks, and its users.
+    access(doc.owner, "task-list:" + doc._id);
+    access(doc.owner, "task-list:" + doc._id + ":users");
   } else if (getType() == "task") {
     requireUserOrAccess(doc.taskList.owner, "task-list:" + doc.taskList.id);
 
@@ -81,11 +81,11 @@ function (doc, oldDoc) {
         validateReadOnly("taskList.id", doc.taskList.id, oldDoc.taskList.id);
         validateReadOnly("taskList.owner", doc.taskList.owner, oldDoc.taskList.owner);
       }
-  
-      // Add doc to task-list and moderators channel.
-      channel("task-list:" + doc.taskList.id);
-      channel("moderators");
     }
+
+    // Add doc to task-list and moderators channel.
+    channel("task-list:" + doc.taskList.id);
+    channel("moderators");
   } else if (getType() == "task-list:user") {
     requireUserOrRole(doc.taskList.owner, "moderator");
 
@@ -113,14 +113,14 @@ function (doc, oldDoc) {
         validateReadOnly("taskList.id", doc.taskList.id, oldDoc.taskList.id);
         validateReadOnly("taskList.owner", doc.taskList.owner, oldDoc.taskList.owner);
       }
-  
-      // Add doc to task-list users and moderators channel.
-      channel("task-list:" + doc.taskList.id + ":users");
-      channel("moderators");
-  
-      // Grant the user access to the task-list and its tasks.
-      access(doc.username, "task-list:" + doc.taskList.id);
     }
+
+    // Add doc to task-list users and moderators channel.
+    channel("task-list:" + doc.taskList.id + ":users");
+    channel("moderators");
+
+    // Grant the user access to the task-list and its tasks.
+    access(doc.username, "task-list:" + doc.taskList.id);
   } else {
     // Log this unexpected error.
     log("Invalid document type: " + doc.type);
