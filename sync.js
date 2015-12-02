@@ -7,7 +7,7 @@ function (doc, oldDoc) {
   }
   
   if (getType() == "moderator") {
-    /* Control Access */ {
+    /* Control Write Access */ {
       // Only allow admins to add/remove moderators.
       requireRole("admin");
     }
@@ -39,7 +39,7 @@ function (doc, oldDoc) {
       }
     }
   } else if (getType() == "task-list") {
-    /* Control Access */ {
+    /* Control Write Access */ {
       if (isCreate()) {
         // Only allow users to create task-lists for themselves.
         requireUser(doc.owner);
@@ -70,13 +70,13 @@ function (doc, oldDoc) {
       channel("moderators");
     }
 
-    /* Grant Access */ {
+    /* Grant Read Access */ {
       // Grant task-list owner access to the task-list, its tasks, and its users.
       access(doc.owner, "task-list:" + doc._id);
       access(doc.owner, "task-list:" + doc._id + ":users");
     }
   } else if (getType() == "task") {
-    /* Control Access */ {
+    /* Control Write Access */ {
       requireUserOrAccess(doc.taskList.owner, "task-list:" + doc.taskList.id);
     }
     
@@ -105,7 +105,7 @@ function (doc, oldDoc) {
       channel("moderators");
     }
   } else if (getType() == "task-list:user") {
-    /* Control Access */ {
+    /* Control Write Access */ {
       requireUserOrRole(doc.taskList.owner, "moderator");
     }
     
@@ -141,7 +141,7 @@ function (doc, oldDoc) {
       channel("moderators");
     }
     
-    /* Grant Access */ {
+    /* Grant Read Access */ {
       // Grant the user access to the task-list and its tasks.
       access(doc.username, "task-list:" + doc.taskList.id);
     }
