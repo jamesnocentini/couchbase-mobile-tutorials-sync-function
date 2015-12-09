@@ -1,6 +1,9 @@
 function (doc, oldDoc) {
   /* Validate */ {
-    if (isUpdate()) {
+    if (isCreate()) {
+      // Don’t allow creating a document w/out a type.
+      validateNotEmpty("type", doc.type);
+    } else if (isUpdate()) {
       // Don’t allow changing the type of any document.
       validateReadOnly("type", doc.type, oldDoc.type);
     }
